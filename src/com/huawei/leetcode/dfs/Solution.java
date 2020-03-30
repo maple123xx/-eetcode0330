@@ -41,4 +41,36 @@ public class Solution {
             str.replace(str.length() - 1, str.length(), "");
         }
     }
+
+    public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<>();
+        if (s == null) {
+            return res;
+        }
+        dfs(s, res, new ArrayList<>(), 0);
+        return res;
+    }
+    private void dfs(String s, List<List<String>> res, List<String> tmp, int i) {
+        if (i == s.length()) {
+            res.add(new ArrayList<>(tmp));
+        }
+        for (int j = i; j < s.length(); j++) {
+            if (isPalindroom(s, i, j)) {
+                tmp.add(s.substring(i, j + 1));
+                dfs(s, res, tmp, j + 1);
+                tmp.remove(tmp.size() - 1);
+            }
+        }
+    }
+    private boolean isPalindroom(String s, int i, int j) {
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) {
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+
 }

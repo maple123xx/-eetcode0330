@@ -94,4 +94,22 @@ public class Solution {
         }
         return res;
     }
+
+    //137 只出现一次的束自Ⅱ
+    public int singleNumber(int[] nums) {
+        int res = 0;
+        for (int i = 0; i < 32; i++) {
+            int bit = 1 << i;
+            int count = 0;
+            for (int elem : nums) {
+                if ((elem & bit) != 0) {
+                    count++;
+                }
+            }
+            if ( count % 3 != 0) {
+                res |= bit;
+            }
+        }
+        return res;
+    }
 }

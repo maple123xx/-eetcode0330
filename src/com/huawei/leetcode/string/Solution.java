@@ -2,6 +2,7 @@ package com.huawei.leetcode.string;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Solution {
     //3 无重复字符的最长子串
@@ -99,5 +100,22 @@ public class Solution {
             return matchCore(str, strIndex + 1, pattern, patternIndex + 1);
         }
         return false;
+    }
+
+    //139 单词拆分
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int n = s.length();
+        boolean[] memo = new boolean[n + 1];
+        // memo[i] 表示 s 中以 i - 1 结尾的字符串是否可被 wordDict 拆分
+        memo[0] = true;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (memo[j] && wordDict.contains(s.substring(j, i))) {
+                    memo[i] = true;
+                    break;
+                }
+            }
+        }
+        return memo[n];
     }
 }
