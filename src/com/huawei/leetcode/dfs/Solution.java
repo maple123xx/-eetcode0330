@@ -42,6 +42,7 @@ public class Solution {
         }
     }
 
+    //131 分割回文串
     public List<List<String>> partition(String s) {
         List<List<String>> res = new ArrayList<>();
         if (s == null) {
@@ -71,6 +72,27 @@ public class Solution {
             j--;
         }
         return true;
+    }
+
+    //216. 组合总和 III
+    List<List<Integer>> res1 = new ArrayList<>();
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        dfs(k, n, new ArrayList<>(), 1, 0);
+        return res1;
+    }
+
+    private void dfs(int k, int n, List<Integer> tmp, int num, int i) {
+        if (i == k) {
+            if (n == 0) {
+                res1.add(new ArrayList<>(tmp));
+            }
+            return;
+        }
+        for (int j = num; j < 10; j++) {
+            tmp.add(j);
+            dfs(k, n - j, tmp, j + 1, i + 1);
+            tmp.remove(tmp.size() - 1);
+        }
     }
 
 }
