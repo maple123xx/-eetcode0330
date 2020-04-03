@@ -112,4 +112,85 @@ public class Solution {
         }
         return res;
     }
+
+    //454. 四数相加 II
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+        HashMap<Integer, Integer> map1 = new HashMap<>();
+        for (int i = 0; i < A.length; i++) {
+            for (int j = 0; j < B.length; j++) {
+                map1.put(A[i] + B[j], map1.getOrDefault(A[i] + B[j], 0) + 1);
+            }
+        }
+        int res = 0;
+        for (int i = 0; i < C.length; i++) {
+            for (int j = 0; j < D.length; j++) {
+                if (map1.containsKey(-(C[i] + D[j]))) {
+                    res += map1.get(-(C[i] + D[j]));
+                }
+            }
+        }
+        return res;
+    }
+
+    //461 汉明距离
+    public int hammingDistance(int x, int y) {
+        int a = x ^ y;
+        int count = 0;
+        while (a > 0) {
+            a &= (a - 1);
+            count++;
+        }
+        return count;
+    }
+
+    //560 和为k的子数组
+    public int subarraySum(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);  // 扫描一遍数组, 使用map记录出现的和的次数, 对每个i计算累计和sum并判断map内是否有sum-k
+        int sum = 0;
+        int res = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (map.containsKey(sum - k)) {
+                res += map.get(sum - k);
+            }
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return res;
+    }
+
+    //581. 最短无序连续子数组
+    public int findUnsortedSubarray(int[] nums) {
+        int m = nums[0];
+        int n = nums[nums.length - 1];
+        int r = -2, l = -1; //防止初始即有序
+        for (int i = 1, j = nums.length - 2; i < nums.length && j >= 0; i++, j--) {
+            m = Math.max(m, nums[i]);
+            n = Math.min(n, nums[j]);
+            if (m != nums[i]) {
+                r = i;
+            }
+            if (n != nums[j]) {
+                l = j;
+            }
+        }
+        return r - l + 1;
+    }
+
+    //621 任务调度器
+    public int leastInterval(char[] tasks, int n) {
+        int[] count = new int[26];
+        for (int i = 0; i < tasks.length; i++) {
+            count[tasks[i] - 'A']++;
+        }
+        Arrays.sort(count);
+        int maxCount = 0;
+        for (int i = 25; i >= 0; i--) {
+            if (count[i] != count[25]) {
+                break;
+            }
+            maxCount++;
+        }
+        return Math.max((count[25] - 1) * (n + 1) + maxCount, tasks.length);
+    }
 }

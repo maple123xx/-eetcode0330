@@ -95,4 +95,39 @@ public class Solution {
         }
     }
 
+    //494 目标和
+    private int count = 0;
+    public int findTargetSumWays(int[] nums, int S) {
+        int sum = 0;
+        dfs(nums, S, 0, sum);
+        return count;
+    }
+
+    private void dfs(int[] nums, int S, int i, int sum) {
+        if (i == nums.length) {
+            if (S == sum) {
+                count++;
+            }
+            return;
+        }
+        dfs(nums, S, i + 1, sum + nums[i]);
+        dfs(nums, S, i + 1, sum - nums[i]);
+    }
+
+    //495 提莫攻击
+    public int findPoisonedDuration(int[] timeSeries, int duration) {
+        int res = 0;
+        int time = 0;
+        for (int i = 0; i < timeSeries.length; i++) {
+            if (timeSeries[i] < time) {
+                res += timeSeries[i] + duration - time;
+                time = timeSeries[i] + duration;
+            } else {
+                res += duration;
+                time = timeSeries[i] + duration;
+            }
+        }
+        return res;
+    }
+
 }
